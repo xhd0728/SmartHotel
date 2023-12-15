@@ -1,0 +1,26 @@
+version: "3"
+services:
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/Smart_Hotel_DEV
+    links:
+      - redis
+      - mysql
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: "10011010"
+    image: "mysql:8.0.30"
+    ports:
+      - "3306:3306"
